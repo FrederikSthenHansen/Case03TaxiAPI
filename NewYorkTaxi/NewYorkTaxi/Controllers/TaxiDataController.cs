@@ -32,6 +32,7 @@ namespace NewYorkTaxi.Controllers
         [Route("[controller]/Avg_Passenger_Count")]
         public async Task<IActionResult> GetAveragePassengerCountForAllVendors()
         {
+            List<AvgPassenger> items;
             string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
 
             // write JSON directly to a file
@@ -54,13 +55,13 @@ namespace NewYorkTaxi.Controllers
             }
 
             //open and deserialize result
-
-            using (StreamReader r = new StreamReader(myJsonFilePath))
+            using (StreamReader reader = new StreamReader(myJsonFilePath))
             {
-                string json = r.ReadToEnd();
-                List<AvgPassenger> items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
-            }
+                string json = reader.ReadToEnd();
 
+                //denne Deserializering skal sikkert finjusteres.
+                 items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+            }
 
             //Mangler at finde en måde at få mit view frem som resultat af Requested
             return new ViewResult();

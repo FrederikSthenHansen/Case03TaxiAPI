@@ -6,10 +6,7 @@ namespace NewYorkTaxi
     {
         public int VendorID { get; set; }
 
-        public int PasserCountAverage { get; set; }
+        public int PassengerCountAverage { get; set; }
 
-       
-
-        
     }
 }
