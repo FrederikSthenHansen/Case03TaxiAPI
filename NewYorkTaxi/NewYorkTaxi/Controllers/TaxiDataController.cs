@@ -30,15 +30,15 @@ namespace NewYorkTaxi.Controllers
 
         [HttpGet]
         [Route("[controller]/Avg_Passenger_Count")]
-        public async Task<IActionResult> GetAveragePassengerCountForAllVendor()
+        public async Task<IActionResult> GetAveragePassengerCountForAllVendors()
         {
-            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count"; 
+            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
 
             // write JSON directly to a file
             System.IO.StreamWriter QueryWriter = new StreamWriter(myJsonFilePath);
 
             //Create a new instance of HttpClient
-            using (HttpClient client = new HttpClient()) 
+            using (HttpClient client = new HttpClient())
             {
                 //Setting up the response...         
 
@@ -48,53 +48,23 @@ namespace NewYorkTaxi.Controllers
                     string data = await content.ReadAsStringAsync();
                     if (data != null)
                     {
-                         QueryWriter.Write(data);
+                        QueryWriter.Write(data);
                     }
                 }
             }
 
             //open and deserialize result
-           
-                using (StreamReader r = new StreamReader(myJsonFilePath))
-                {
-                    string json = r.ReadToEnd();
-                    List<AvgPassenger> items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
-                }
+
+            using (StreamReader r = new StreamReader(myJsonFilePath))
+            {
+                string json = r.ReadToEnd();
+                List<AvgPassenger> items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+            }
 
 
-                //Mangler at finde en måde at få mit view frem som resultat af Requested
+            //Mangler at finde en måde at få mit view frem som resultat af Requested
             return new ViewResult();
         }
-
-
-
-        // Get a reference to the resource itself
-        // The result (a Resouce object) is a generic type
-        // The type parameter represents the underlying rows of the resource
-        // and can be any JSON-serializable class
-        // var myDataset = myClient.GetResource<Taxidata>("t29m-gskq");
-
-        // Resource objects read their own data
-        //var rows = myDataset.GetRows(limit: 5000);
-
-        //Console.WriteLine($"Got {rows.Count()} results. Dumping first results:" ;
-
-        //foreach (var keyValue in rows.First())
-
-
-
-        //[HttpGet]
-        //public IEnumerable<WeatherForecast> Get()
-        //{
-        //    var rng = new Random();
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateTime.Now.AddDays(index),
-        //        TemperatureC = rng.Next(-20, 55),
-        //        Summary = Summaries[rng.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
 
     }
 }
