@@ -61,6 +61,7 @@ namespace NewYorkTaxi.Controllers
 
                 //denne Deserializering skal sikkert finjusteres.
                  items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                
             }
 
             //Mangler at finde en måde at få mit view frem som resultat af Requested
