@@ -13,7 +13,7 @@ namespace NewYorkTaxi.Controllers
     public class TaxiDataController : ControllerBase
     {
 
-        SodaClient myClient = new SodaClient("https://data.cityofnewyork.us", "YOURAPPTOKENHERE");
+        SodaClient myClient = new SodaClient("https://data.cityofnewyork.us");
 
         //private static readonly string[] Summaries = new[]
         //{
@@ -28,29 +28,29 @@ namespace NewYorkTaxi.Controllers
         }
 
 
-        
 
-   
 
-    // Get a reference to the resource itself
-    // The result (a Resouce object) is a generic type
-    // The type parameter represents the underlying rows of the resource
-    // and can be any JSON-serializable class
-     var myDataset = myClient.GetResource<Taxidata>("t29m-gskq");
 
-    // Resource objects read their own data
-    var rows = myDataset.GetRows(limit: 5000);
 
-    //Console.WriteLine($"Got {rows.Count()} results. Dumping first results:" ;
+        // Get a reference to the resource itself
+        // The result (a Resouce object) is a generic type
+        // The type parameter represents the underlying rows of the resource
+        // and can be any JSON-serializable class
+       // var myDataset = myClient.GetResource<Taxidata>("t29m-gskq");
 
-    //foreach (var keyValue in rows.First())
-    
-        [HttpGet]
-        
-        public async Task<IActionResult> GetAveragePassengerCountForAllVendor()
-        {
-            return ;
-        }
+        // Resource objects read their own data
+        //var rows = myDataset.GetRows(limit: 5000);
+
+        //Console.WriteLine($"Got {rows.Count()} results. Dumping first results:" ;
+
+        //foreach (var keyValue in rows.First())
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAveragePassengerCountForAllVendor()
+        //{
+        //    ViewResult ResulsintView=
+        //    return new ViewResult();
+        //}
 
         //[HttpGet]
         //public IEnumerable<WeatherForecast> Get()
@@ -64,6 +64,7 @@ namespace NewYorkTaxi.Controllers
         //    })
         //    .ToArray();
         //}
-    
+
+    }
 }
 
