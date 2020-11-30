@@ -24,20 +24,31 @@
     </thead>
     <tbody>
 
-@foreach (var item in Model.AvgPassengers) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VendorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassengerCountAverage)
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.AvgPassengers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassengerCountAverage)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    ChartJS.Helpers.MVC.Chart myChart = new ChartJS.Helpers.MVC.Chart()
+        .AddTitle("Paseenger")
+        .AddSeries(
+            name: "Employee",
+            xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
+            yValues: new[] { "2", "6", "4", "5", "3" })
+        .Write();
+}
