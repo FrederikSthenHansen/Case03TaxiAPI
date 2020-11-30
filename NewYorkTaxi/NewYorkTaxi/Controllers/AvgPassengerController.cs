@@ -12,6 +12,7 @@ namespace NewYorkTaxi.Controllers
 {
     public class AvgPassengerController : Controller
     {
+        //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
         //private readonly MvcDbContext _context;
         private AveragePassengerDisplay Display;
