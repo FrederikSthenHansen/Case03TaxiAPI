@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NewYorkTaxi.AvgPassenger>
+﻿@model NewYorkTaxi.DisplayModel.AveragePassengerDisplay
 
 
 @{
@@ -14,17 +14,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.VendorID)
+                @Html.DisplayNameFor(model => model.Label.VendorID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PassengerCountAverage)
+                @Html.DisplayNameFor(model => model.Label.PassengerCountAverage)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.AvgPassengers) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.VendorID)

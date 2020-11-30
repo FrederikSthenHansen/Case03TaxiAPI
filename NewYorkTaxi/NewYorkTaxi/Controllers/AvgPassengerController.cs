@@ -1,38 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.IO;
-using SODA;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using NewYorkTaxi.DisplayModel;
 
 namespace NewYorkTaxi.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class TaxiDataController : ControllerBase
+    public class AvgPassengerController : Controller
     {
+        readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
+        //private readonly MvcDbContext _context;
+        private AveragePassengerDisplay Display;
+        public static List<AvgPassenger> items;
 
-        //SodaClient myClient = new SodaClient("https://data.cityofnewyork.us");
-
-      
-        private readonly ILogger<TaxiDataController> _logger;
-
-        public TaxiDataController(ILogger<TaxiDataController> logger)
+        public AvgPassengerController(/*MvcDbContext context*/)
         {
-            _logger = logger;
+            //_context = context;
+            Display = new AveragePassengerDisplay();
+         
         }
 
-        readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
 
         [HttpGet]
-        [Route("[controller]/Avg_Passenger_Count")]
+        [Route("[controller]")]
         public async Task<IActionResult> GetAveragePassengerCountForAllVendors()
         {
-            List<AvgPassenger> items;
+           
             string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
 
             // write JSON directly to a file
@@ -60,14 +57,19 @@ namespace NewYorkTaxi.Controllers
                 string json = reader.ReadToEnd();
 
                 //denne Deserializering skal sikkert finjusteres.
-                 items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
-                
+                items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+
             }
 
-            //Mangler at finde en måde at få mit view frem som resultat af Requested
-            return new ViewResult();
-        }
+            items.GroupBy(x => x.VendorID);
 
+            Display.AvgPassengers = items;
+            //Mangler at finde en måde at få mit view frem som resultat af Requested
+            return View (Display);
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
-
