@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "TaxiDataController",
+      "launchUrl": "AvgPassengerController/GetAveragePassengerCountForAllVendors",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "NewYorkTaxi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "AvgPassengerController",
+      "launchUrl": "AvgPassengerController/GetAveragePassengerCountForAllVendors",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
