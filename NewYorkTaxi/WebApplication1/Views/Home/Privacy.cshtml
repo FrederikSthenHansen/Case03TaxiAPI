@@ -55,13 +55,25 @@
         google.charts.setOnLoadCallback(drawChart);
         function drawChart()
         {
-            var data = google.visualization.arrayToDataTable([
-                ['VendorID', 'Passenger Count'],
+            var data = new google.visualization.DataTable()
+            data.addColumn('number', 'VendorID')
+            data.addColumn('number', 'Passenger Count')
+            Data.addRows([@foreach (var data in Model.AvgPassengers)
+                {
+                    <text>['@data.VendorID', @data.PassengerCountAverage],</text>
+                }])
+
+                @*['VendorID', 'Passenger Count'],
                 @foreach (var data in Model.AvgPassengers)
                 {
                     <text>['@data.VendorID', @data.PassengerCountAverage],</text>
-                }
-                var options = { title: 'Passengers carried', curveType: 'function', legend: { position: 'bottom' } };
+                }*@
+
+
+            // Set Chart Options
+            var options = { title: 'Passengers carried', curveType: 'function', legend: { position: 'bottom' } };
+
+            //Instansiate Chart
             var chart = new google.visualization.LineChart(document.getElementById('mychart'));
             chart.draw(data, options);
         }
