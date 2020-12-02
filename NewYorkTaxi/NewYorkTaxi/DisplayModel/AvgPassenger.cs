@@ -2,6 +2,9 @@ using System;
 
 namespace NewYorkTaxi
 {
+    /// <summary>
+    /// Class to hold a vendor iD and an int for Passenger count. name is misleading. 
+    /// </summary>
     public class AvgPassenger
     {
         public int VendorID { get; set; }

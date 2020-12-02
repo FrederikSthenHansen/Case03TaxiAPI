@@ -47,39 +47,66 @@
     </tbody>
 </table>
 
-<html>
 <head>
+    <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
+        // Load the Visualization API and the corechart package.
         google.charts.load('current', { 'packages': ['corechart'] });
+
+        // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawChart);
-        function drawChart()
-        {
-            var data = new google.visualization.DataTable()
-            data.addColumn('number', 'VendorID')
-            data.addColumn('number', 'Passenger Count')
-            Data.addRows([@foreach (var data in Model.AvgPassengers)
+
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor id');
+            data.addColumn('number', 'Passengers Carried');
+          @Model.SortDistinctVendors()
+
+            data.addRows([
+                 @foreach (var item in Model.DistinctVendors)
+                 {
+                     Model.Iterate(Model.VendorIdLabel);
+                //iterator slutter på count-1, så -2 er den sidste plads i collectionen
+                if (Model.iterator < Model.DistinctVendors.Length-2)
                 {
-                    <text>['@data.VendorID', @data.PassengerCountAverage],</text>
-                }])
-
-                @*['VendorID', 'Passenger Count'],
-                @foreach (var data in Model.AvgPassengers)
+                         //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
+                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.Average()}],";
+                }
+                else
                 {
-                    <text>['@data.VendorID', @data.PassengerCountAverage],</text>
-                }*@
+                         Model.Iterate(Model.VendorIdLabel);
+                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.Average()}]";
+                }
+                         <text> @Model.displaydata </text>
+                    Model.Iterate(Model.iterator);
+                  }
+            ]);
+              @Model.NumberReset(Model.iterator);
+            @Model.NumberReset(Model.VendorIdLabel);
 
+                         // Set chart options
+                         var options = {
+                'title': 'Higest average passangercount',
+                'width': 500,
+                'height': 400
+            };
 
-            // Set Chart Options
-            var options = { title: 'Passengers carried', curveType: 'function', legend: { position: 'bottom' } };
-
-            //Instansiate Chart
-            var chart = new google.visualization.LineChart(document.getElementById('mychart'));
-            chart.draw(data, options);
+                     // Instantiate and draw our chart, passing in some options.
+                     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                     chart.draw(data, options);
         }
     </script>
 </head>
+
 <body>
-    <div id="mychart" style="width: 900px; height: 500px"></div>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
 </body>
-</html>
