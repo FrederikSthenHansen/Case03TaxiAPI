@@ -11,6 +11,7 @@ using System.IO;
 using Newtonsoft.Json;
 using NewYorkTaxi;
 using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -72,27 +73,54 @@ namespace WebApplication1.Controllers
             //clean up jsonfile from previous query
             System.IO.File.Delete(myJsonFilePath);
 
-            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
+            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
 
             //send Query and write response to Jsonfile
            
 
             if (await writeJsonResponse(SoQL)== true)
             {
+                JObject obj = null;
+                JsonSerializer jsonSerializer = new JsonSerializer();
                 //open Jsonfile and deserialize content
-                using (StreamReader reader = new StreamReader(myJsonFilePath))
+
+                if (System.IO.File.Exists(myJsonFilePath))
                 {
-                    string json = reader.ReadToEnd();
+                    
 
-                    //denne Deserializering skal sikkert finjusteres. mine settins skal sættes rigtigt op.
-                    items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json,mySettings);
+                    using (StreamReader reader = new StreamReader(myJsonFilePath))
+                    {
+                       string json= reader.ReadToEnd();
+                        //JsonReader jsonReader = new JsonReader(reader);
+                       // obj = jsonSerializer.Deserialize(jsonReader) as JObject;
+                        //jsonReader.Close();
+                        reader.Close();
 
+                        //foreach(string x in obj)
+                        //{
+
+                        //}
+                        //items= hvad items nu skal være.
+                        //Prøv at bruge readeren til at generere mine objecter
+
+                        //denne Deserializering skal sikkert finjusteres. mine settins skal sættes rigtigt op.
+                        /*AvgPassengerCollection DeSerializedCollection = JsonConvert.DeserializeObject<AvgPassengerCollection>(json);*/
+                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json/*"[['vendorid'],['passenger_count']]"*/) /*DeSerializedCollection.ContentList*/;
+                    }
                 }
-
                 //Seperate the vendors
                 //items.GroupBy(x => x.VendorID);
 
-                
+
+
+                //placeholder til frontend
+                items.Clear();
+                for (int x=0; x < 40; x++)
+                {
+                    items.Add(new AvgPassenger("mock"));
+                }
+                 
+                //ende på placeholder
 
                 Display.AvgPassengers = items;
             }
@@ -100,6 +128,16 @@ namespace WebApplication1.Controllers
             return View(Display);
         }
 
+        private List<AvgPassenger> ReadAvgPassenger(StreamReader readerParam)
+        {
+            List<AvgPassenger> ret=new List<AvgPassenger>();
+            AvgPassenger obj= new AvgPassenger();
+            obj.VendorID = readerParam.Read(); //find a way to read each property.
+
+
+            ret.Add(obj);
+            return ret;
+        }
 
         //public void readJson()
         //{

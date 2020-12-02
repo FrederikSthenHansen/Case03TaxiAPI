@@ -56,12 +56,12 @@
         function drawChart()
         {
             var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales'],
-                ['2004', 1000],
-                ['2005', 1170],
-                ['2006', 660],
-                ['2007', 1030]]);
-            var options = { title: 'Company Performance', curveType: 'function', legend: { position: 'bottom' } };
+                ['VendorID', 'Passenger Count'],
+                @foreach (var data in Model.AvgPassengers)
+                {
+                    <text>['@data.VendorID', @data.PassengerCountAverage],</text>
+                }
+                var options = { title: 'Passengers carried', curveType: 'function', legend: { position: 'bottom' } };
             var chart = new google.visualization.LineChart(document.getElementById('mychart'));
             chart.draw(data, options);
         }
