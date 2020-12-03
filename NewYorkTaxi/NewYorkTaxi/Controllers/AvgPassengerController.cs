@@ -20,9 +20,7 @@ namespace NewYorkTaxi.Controllers
 
         public AvgPassengerController(/*MvcDbContext context*/)
         {
-            //_context = context;
             Display = new AveragePassengerDisplay();
-         
         }
 
 

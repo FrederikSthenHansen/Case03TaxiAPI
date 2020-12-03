@@ -15,6 +15,8 @@ namespace NewYorkTaxi
 
         public decimal Trip_Distance { get; set; }
 
+        public decimal Tip_Amount { get; set; }
+
         public AvgPassenger()
         {
 

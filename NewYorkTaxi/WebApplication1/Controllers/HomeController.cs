@@ -24,6 +24,9 @@ namespace WebApplication1.Controllers
         //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
 
+        readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
+        readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select= distinct vendorid";
+
         public HomeController(ILogger<HomeController> logger)
         {   
             _logger = logger;
@@ -72,7 +75,7 @@ namespace WebApplication1.Controllers
             //send Query and write response to Jsonfile
             if (await writeJsonResponse(SoQL)== true)
             {
-                JObject obj = null;
+               
                 JsonSerializer jsonSerializer = new JsonSerializer();
 
                 //open Jsonfile and deserialize content
@@ -93,7 +96,7 @@ namespace WebApplication1.Controllers
                 Display.AvgPassengers = items;
 
                 //Seperate the vendors in the displaymodel
-                Display.SortDistinctVendors();
+                Display.SortDistinctVendors(2);
             }
             
             return View(Display);

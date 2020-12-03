@@ -19,8 +19,9 @@ namespace NewYorkTaxi.DisplayModel
 
 
 
-        public int SortDistinctVendors()
+        public int SortDistinctVendors(int vendors)
         {
+            vendorCount = vendors;
             DistinctVendors = new List<DistincVendorPassengerCount>();
 
             for (int v = 0; v< vendorCount; v++)
