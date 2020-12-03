@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        private myJsonreader myReader;
+       
         private readonly ILogger<HomeController> _logger;
         private AveragePassengerDisplay Display;
         public static List<NewYorkTaxi.AvgPassenger> items;
@@ -73,10 +73,11 @@ namespace WebApplication1.Controllers
             //clean up jsonfile from previous query
             System.IO.File.Delete(myJsonFilePath);
 
-            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
+            string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
+            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
 
             //send Query and write response to Jsonfile
-           
+
 
             if (await writeJsonResponse(SoQL)== true)
             {
@@ -91,38 +92,31 @@ namespace WebApplication1.Controllers
                     using (StreamReader reader = new StreamReader(myJsonFilePath))
                     {
                        string json= reader.ReadToEnd();
-                        //JsonReader jsonReader = new JsonReader(reader);
-                       // obj = jsonSerializer.Deserialize(jsonReader) as JObject;
-                        //jsonReader.Close();
+                       
                         reader.Close();
 
-                        //foreach(string x in obj)
-                        //{
+                        //Remember to Always mirror the Database property names in your c# object properies!!!
+                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
 
-                        //}
-                        //items= hvad items nu skal være.
-                        //Prøv at bruge readeren til at generere mine objecter
-
-                        //denne Deserializering skal sikkert finjusteres. mine settins skal sættes rigtigt op.
-                        /*AvgPassengerCollection DeSerializedCollection = JsonConvert.DeserializeObject<AvgPassengerCollection>(json);*/
-                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json/*"[['vendorid'],['passenger_count']]"*/) /*DeSerializedCollection.ContentList*/;
+                      
                     }
                 }
-                //Seperate the vendors
-                //items.GroupBy(x => x.VendorID);
-
-
 
                 //placeholder til frontend
-                items.Clear();
-                for (int x=0; x < 40; x++)
-                {
-                    items.Add(new AvgPassenger("mock"));
-                }
-                 
+                //items.Clear();
+                //for (int x = 0; x < 40; x++)
+                //{
+                //    items.Add(new AvgPassenger("mock"));
+                //}
                 //ende på placeholder
 
+
+  
+               //Deliver items to DisplayModel
                 Display.AvgPassengers = items;
+
+                //Seperate the vendors in the displaymodel
+                Display.SortDistinctVendors();
             }
             //Mangler at finde en måde at få mit view frem som resultat af Requested
             return View(Display);

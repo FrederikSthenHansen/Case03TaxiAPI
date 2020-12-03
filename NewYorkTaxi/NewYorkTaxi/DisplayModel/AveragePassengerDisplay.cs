@@ -8,32 +8,49 @@ namespace NewYorkTaxi.DisplayModel
     public class AveragePassengerDisplay
     {
         public List<AvgPassenger> AvgPassengers;
-        public List<int>[] DistinctVendors;
+        //public List<int>[] DistinctVendors;
+        public List<DistincVendorPassengerCount> DistinctVendors;
         public AvgPassenger Label;
-        public int VendorIdLabel;
+        public int VendorIdLabel { get { return iterator + 1; } }
         public string displaydata;
        public int iterator;
-        
+        int vendorCount = 2; //get vendors from Database somehow.
 
-       
+
 
 
         public int SortDistinctVendors()
         {
-            int vendorCount = 2;
-            DistinctVendors = new List<int>[vendorCount];
-            for (int x=0; x < vendorCount; x++)
+            DistinctVendors = new List<DistincVendorPassengerCount>();
+
+            for (int v = 0; v< vendorCount; v++)
             {
-                
-                DistinctVendors[x] = new List<int>();
+              DistincVendorPassengerCount Dvp=  new DistincVendorPassengerCount(v+1);
+                DistinctVendors.Add(Dvp);
+
                 for (int a = 0; a < AvgPassengers.Count; a++)
                 {
-                    if (AvgPassengers[a].VendorID == x+1)
+                    if (AvgPassengers[a].VendorID == v+1)
                     {
-                        DistinctVendors[x][a]= AvgPassengers[a].PassengerCountAverage;
+                        Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
                     }
                 }
             }
+            
+            
+            //DistinctVendors = new List<int>[vendorCount];
+            //for (int x=0; x < vendorCount; x++)
+            //{
+
+            //    DistinctVendors[x] = new List<int>();
+            //    for (int a = 0; a < AvgPassengers.Count; a++)
+            //    {
+            //        if (AvgPassengers[a].VendorID == x+1)
+            //        {
+            //            DistinctVendors[x].Add(AvgPassengers[a].PassengerCount);
+            //        }
+            //    }
+            //}
 
 
 
@@ -48,11 +65,11 @@ namespace NewYorkTaxi.DisplayModel
            return number = 0;
             
         }
-        public int Iterate(int number)
+        public int Iterate()
         {
          
-            number++;
-            return number;
+            iterator++;
+            return iterator;
         }
 
         public AveragePassengerDisplay()

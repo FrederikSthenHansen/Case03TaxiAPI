@@ -9,7 +9,9 @@ namespace NewYorkTaxi
     {
         public int VendorID { get; set; }
 
-        public int PassengerCountAverage { get; set; }
+        
+        
+        public int Passenger_Count { get; set; }
 
         public AvgPassenger()
         {
@@ -21,7 +23,7 @@ namespace NewYorkTaxi
             {
                 Random rng = new Random();
                 VendorID = rng.Next(1, 3);
-                PassengerCountAverage = rng.Next(0, 6);
+                Passenger_Count = rng.Next(0, 6);
             }
         }
     }

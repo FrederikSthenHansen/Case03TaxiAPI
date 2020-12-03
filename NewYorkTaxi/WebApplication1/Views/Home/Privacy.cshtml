@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
+
 @model NewYorkTaxi.DisplayModel.AveragePassengerDisplay
 
 
@@ -9,8 +9,8 @@
     ViewData["Title"] = "View";
 }
 
-<h1>Average Data</h1>
-<h1>Her skal Det meget gerne stå en graf under!!</h1>
+<h1>Passanger Data for Taxi Companies</h1>
+<h1></h1>
 <p>
     @*<a asp-action="Create">Create New</a>*@
 </p>
@@ -21,59 +21,209 @@
                 @Html.DisplayNameFor(model => model.Label.VendorID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Label.PassengerCountAverage)
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].averageValue)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var item in Model.AvgPassengers)
+        @foreach (var item in Model.DistinctVendors)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VendorID)
+                    Vendor number @Html.DisplayFor(modelItem => item.VendorName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PassengerCountAverage)
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    @Html.DisplayFor(modelItem => item.averageValue)
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<head>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Label.VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].PassengerTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.DistinctVendors)
+        {
+            <tr>
+                <td>
+                    Vendor number @Html.DisplayFor(modelItem => item.VendorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PassengerTotal)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Label.VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].TotalTrips)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.DistinctVendors)
+        {
+            <tr>
+                <td>
+                    Vendor number @Html.DisplayFor(modelItem => item.VendorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalTrips)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<html>
+
+    <head>
+        <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', { 'packages': ['corechart'] });
 
+
         // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawTotalTripsChart);
+        google.charts.setOnLoadCallback(drawAverageChart);
+        google.charts.setOnLoadCallback(drawTotalpassengersChart);
 
 
         // Callback that creates and populates a data table,
         // instantiates the pie chart, passes in the data and
         // draws it.
-        function drawChart() {
+
+        function drawTotalPassengersChart() {
 
             // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor id');
             data.addColumn('number', 'Passengers Carried');
-          @Model.SortDistinctVendors()
 
-            data.addRows([
-                 @foreach (var item in Model.DistinctVendors)
+
+            data.addRows(
+            [
+                 @*@foreach (var item in Model.DistinctVendors)
                  {
-                     Model.Iterate(Model.VendorIdLabel);
+                     
+                //iterator slutter på count-1, så -2 er den sidste plads i collectionen der skal have komma
+                if (Model.iterator <= Model.DistinctVendors.Count-2)
+                {
+                         //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
+                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.PassengerTotal}],";
+                }
+                else
+                {
+                        
+                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.PassengerTotal}]";
+                }
+                         <text> @Model.displaydata </text> //virker ikke
+                    Model.Iterate();
+                  }*@
+
+                    ['TestVendor 3', @Model.DistinctVendors[0].PassengerTotal],
+                    ['TestVendor 4', @Model.DistinctVendors[1].PassengerTotal]
+
+            ]);
+              @Model.NumberReset(Model.iterator);
+            @Model.NumberReset(Model.VendorIdLabel);
+
+                         // Set chart options
+                         var options = {
+                'title': 'Total Passengers Carried',
+                'width': 500,
+                'height': 400
+            };
+
+                     // Instantiate and draw our chart, passing in some options.
+                     var chart = new google.visualization.PieChart(document.getElementById('chart_div_passenger_total'));
+                     chart.draw(data, options);
+        }
+
+         function drawTotalTripsChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor id');
+            data.addColumn('number', 'Total trips');
+
+
+            data.addRows(
+                [
+
+                    @*@foreach(var item in Model.DistinctVendors)
+             {
+
+                 //iterator slutter på count-1, så -2 er den sidste plads i collectionen der skal have komma
+                 if (Model.iterator <= Model.DistinctVendors.Count - 2) {
+                     //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
+                     Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.TotalTrips}],";
+                 }
+                 else {
+
+                     Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.TotalTrips}]";
+                 }
+                 <text> @Model.displaydata </text> //virker ikke
+                 Model.Iterate();
+             }*@
+                    ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTrips],
+                    ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips]
+
+            ]);
+              @Model.NumberReset(Model.iterator);
+            @Model.NumberReset(Model.VendorIdLabel);
+
+                         // Set chart options
+                         var options = {
+                'title': 'Total Trips driven',
+                'width': 500,
+                'height': 400
+            };
+
+                     // Instantiate and draw our chart, passing in some options.
+                     var chart = new google.visualization.PieChart(document.getElementById('chart_div_total_trips'));
+                     chart.draw(data, options);
+        }
+
+         function drawAverageChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor id');
+            data.addColumn('number', 'Passengers Carried');
+
+
+            data.addRows(
+            [
+                 @*@foreach (var item in Model.DistinctVendors)
+                 {
+                     Model.Iterate();
                 //iterator slutter på count-1, så -2 er den sidste plads i collectionen
                 if (Model.iterator < Model.DistinctVendors.Length-2)
                 {
@@ -82,12 +232,16 @@
                 }
                 else
                 {
-                         Model.Iterate(Model.VendorIdLabel);
+                         Model.Iterate();
                     Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.Average()}]";
                 }
                          <text> @Model.displaydata </text>
-                    Model.Iterate(Model.iterator);
-                  }
+                    Model.Iterate();
+                  }*@
+
+                    ['TestVendor 1', @Model.DistinctVendors[0].averageValue],
+                    ['TestVendor 2', @Model.DistinctVendors[1].averageValue]
+
             ]);
               @Model.NumberReset(Model.iterator);
             @Model.NumberReset(Model.VendorIdLabel);
@@ -100,13 +254,18 @@
             };
 
                      // Instantiate and draw our chart, passing in some options.
-                     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                     var chart = new google.visualization.PieChart(document.getElementById('chart_div_average'));
                      chart.draw(data, options);
         }
-    </script>
-</head>
-
-<body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
-</body>
+        </script>
+    </head>
+    <body>
+        <table class="figures">
+            <tr>
+                <td><div id="chart_div_total_trips"></div></td>
+                <td><div id="chart_div_average"></div></td>
+                <td><div id="chart_div_passenger_total"></div></td>
+            </tr>
+        </table>
+    </body>
+</html>
