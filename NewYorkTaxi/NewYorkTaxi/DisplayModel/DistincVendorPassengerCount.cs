@@ -24,14 +24,21 @@ namespace NewYorkTaxi.DisplayModel
 
         [Display(Name = "Passenger count average")]
         public double averageValue 
-       { get 
-            { double ret;
-                if (passengerCounts == null) 
-                {ret = 0;} 
-                else {ret = passengerCounts.Average();}
+       {
+            get 
+            {
+                double ret;
+                if (passengerCounts == null)
+                { ret = 0; }
+                else { ret = passengerCounts.Average(); }
+
                 return ret;
-            } 
-       }
+
+                ////placeholder code starts
+                //return 2.45;
+                //Placeholder code ends
+            }
+        }
 
         [Display(Name = "Total Passengers for vendor")]
         public int PassengerTotal

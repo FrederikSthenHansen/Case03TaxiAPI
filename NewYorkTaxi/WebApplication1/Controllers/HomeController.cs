@@ -20,12 +20,16 @@ namespace WebApplication1.Controllers
         private readonly ILogger<HomeController> _logger;
         private AveragePassengerDisplay Display;
         public static List<NewYorkTaxi.AvgPassenger> items;
+        
 
         //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
 
+
+        //string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
+        readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
         readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
-        readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select= distinct vendorid";
+        readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=distinct%20vendorid";
 
         public HomeController(ILogger<HomeController> logger)
         {   
@@ -40,6 +44,8 @@ namespace WebApplication1.Controllers
 
         private async Task<bool> writeJsonResponse(string myUrl)
         {
+            //clean up jsonfile from previous query
+            System.IO.File.Delete(myJsonFilePath);
 
             // write JSON directly to a file
             System.IO.StreamWriter QueryWriter = new StreamWriter(myJsonFilePath);
@@ -49,7 +55,7 @@ namespace WebApplication1.Controllers
             using (HttpClient client = new HttpClient())
             {
                 //Setting up the response...         
-
+                //myUrl = System.Web.HttpUtility.UrlEncode(myUrl);
                 using (HttpResponseMessage res = await client.GetAsync(myUrl))
                 using (HttpContent content = res.Content)
                 {
@@ -57,46 +63,64 @@ namespace WebApplication1.Controllers
                     if (data != null)
                     {
                         QueryWriter.Write(data);
+                        QueryWriter.Close();
+                        return true;
+                    }
+                    else  
+                    {
+                        QueryWriter.Close();
+                        return false; 
                     }
                 }
+                
             }
-            QueryWriter.Close();
-            return true;
+            
         }
 
+
+       
+
         public async Task<IActionResult> Privacy()
-        {
-            //clean up jsonfile from previous query
-            System.IO.File.Delete(myJsonFilePath);
+        {  
+           // send Query about how many Vendors there are and write response to Jsonfile
+            //if (await writeJsonResponse(SoQLDistinctVendors) == true)
+            //{
+            //    if (System.IO.File.Exists(myJsonFilePath))
+            //    {
+            //        using (StreamReader reader = new StreamReader(myJsonFilePath))
+            //        {
+            //            string json = reader.ReadToEnd();
 
-            string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
-            string SoQL = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
+            //            reader.Close();
 
-            //send Query and write response to Jsonfile
-            if (await writeJsonResponse(SoQL)== true)
-            {
-               
-                JsonSerializer jsonSerializer = new JsonSerializer();
+            //            //Remember to Always mirror the Database property names in your c# object properies!!!
+            //            Display.VendorIdLabel = JsonConvert.DeserializeObject<List<int>>(json);
+            //        }
+            //    }
+            //}
 
-                //open Jsonfile and deserialize content
-                if (System.IO.File.Exists(myJsonFilePath))
+            //send Query about vendors and passengercounts and write response to Jsonfile
+            if (await writeJsonResponse(SoQLVendorsAndPasengerCount) == true)
                 {
-                    using (StreamReader reader = new StreamReader(myJsonFilePath))
+                    //open Jsonfile and deserialize content
+                    if (System.IO.File.Exists(myJsonFilePath))
                     {
-                       string json= reader.ReadToEnd();
-                       
-                        reader.Close();
+                        using (StreamReader reader = new StreamReader(myJsonFilePath))
+                        {
+                            string json = reader.ReadToEnd();
 
-                        //Remember to Always mirror the Database property names in your c# object properies!!!
-                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                            reader.Close();
+
+                            //Remember to Always mirror the Database property names in your c# object properies!!!
+                            items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                        }
                     }
-                }
 
-               //Deliver items to DisplayModel
-                Display.AvgPassengers = items;
+                    //Deliver items to DisplayModel
+                    Display.AvgPassengers = items;
 
                 //Seperate the vendors in the displaymodel
-                Display.SortDistinctVendors(2);
+                Display.SortDistinctVendors();
             }
             
             return View(Display);

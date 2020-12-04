@@ -11,59 +11,51 @@ namespace NewYorkTaxi.DisplayModel
         //public List<int>[] DistinctVendors;
         public List<DistincVendorPassengerCount> DistinctVendors;
         public AvgPassenger Label;
-        public int VendorIdLabel { get { return iterator + 1; } }
+        public List<int> VendorIdLabel = new List<int>();
         public string displaydata;
        public int iterator;
-        int vendorCount = 2; //get vendors from Database somehow.
+       public int vendorCount { get { return VendorIdLabel.Count; }}
 
 
 
 
-        public int SortDistinctVendors(int vendors)
+        public int SortDistinctVendors()
         {
-            vendorCount = vendors;
+
+            //Mock Vendor ID count code start
+            VendorIdLabel.Add(1);
+            VendorIdLabel.Add(2);
+            //VendorIdLabel.Add(4);
+            //Mock vendor iD count Code ends
+            
+            
             DistinctVendors = new List<DistincVendorPassengerCount>();
 
             for (int v = 0; v< vendorCount; v++)
             {
-              DistincVendorPassengerCount Dvp=  new DistincVendorPassengerCount(v+1);
+              DistincVendorPassengerCount Dvp=  new DistincVendorPassengerCount(VendorIdLabel[v]);
                 DistinctVendors.Add(Dvp);
 
                 for (int a = 0; a < AvgPassengers.Count; a++)
                 {
-                    if (AvgPassengers[a].VendorID == v+1)
+                    if (AvgPassengers[a].VendorID == VendorIdLabel[v])
                     {
                         Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
+                        AvgPassengers.RemoveAt(a);
                     }
                 }
             }
             
-            
-            //DistinctVendors = new List<int>[vendorCount];
-            //for (int x=0; x < vendorCount; x++)
-            //{
-
-            //    DistinctVendors[x] = new List<int>();
-            //    for (int a = 0; a < AvgPassengers.Count; a++)
-            //    {
-            //        if (AvgPassengers[a].VendorID == x+1)
-            //        {
-            //            DistinctVendors[x].Add(AvgPassengers[a].PassengerCount);
-            //        }
-            //    }
-            //}
-
-
-
+          
             return 1;
         }
 
         
 
 
-        public int NumberReset( int number)
+        public int NumberReset( )
         {
-           return number = 0;
+           return iterator = 0;
             
         }
         public int Iterate()

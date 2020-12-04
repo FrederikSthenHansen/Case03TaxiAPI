@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Chart.js" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NewYorkTaxi\NewYorkTaxi.csproj" />
   </ItemGroup>
 
