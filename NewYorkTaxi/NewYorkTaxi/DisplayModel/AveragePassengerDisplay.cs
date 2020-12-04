@@ -43,6 +43,7 @@ namespace NewYorkTaxi.DisplayModel
                         Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
                         Dvp.Tips.Add(AvgPassengers[a].Tip_Amount);
                         Dvp.TotalPrices.Add(AvgPassengers[a].Total_Amount);
+                        Dvp.Distances.Add(AvgPassengers[a].Trip_Distance);
                         AvgPassengers.RemoveAt(a);
                     }
                 }

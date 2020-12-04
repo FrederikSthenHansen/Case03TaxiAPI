@@ -122,6 +122,7 @@
         }
     </tbody>
 </table>
+
 <table class="table">
     <thead>
         <tr>
@@ -150,6 +151,34 @@
     </tbody>
 </table>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Label.VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].AverageDistance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.DistinctVendors)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AverageDistance)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 <html>
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -158,14 +187,16 @@
         // Load Charts and the corechart package.
         google.charts.load('current', { 'packages': ['corechart'] });
 
-        // Draw the pie chart for Sarah's pizza when Charts is loaded.
+        //Draw charts when call back is loaded
         google.charts.setOnLoadCallback(drawTotalTripsChart);
 
-        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
         google.charts.setOnLoadCallback(drawTotalPassengersChart);
 
-        //Draw the Pie Chart for Total Tips earned, when charts is loaded.
-        google.charts.setOnLoadCallback(drawTotalTipsChart)
+        google.charts.setOnLoadCallback(drawTotalTipsChart);
+
+        google.charts.setOnLoadCallback(drawAverageDistanceChart);
+
+        google.Charts.setOnLoadCallback(drawSomethingChart);
 
 
           // Callback that draws the pie chart for Total tips earned.
@@ -182,7 +213,7 @@
 
             // Set options for Sarah's pie chart.
             var options = {
-                title: 'Total Tips earned',
+                title: '@Html.DisplayNameFor(model => model.DistinctVendors[0].TotalTips)',
                 width: 400,
                 height: 300
             };
@@ -240,6 +271,55 @@
             var chart = new google.visualization.PieChart(document.getElementById('Total_Passenger_Div'));
             chart.draw(data, options);
         }
+
+        // Callback that draws the pie chart for Anthony's pizza.
+        function drawSomethingChart() {
+
+            // Create the data table for Anthony's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor ID');
+            data.addColumn('number', 'Passengers');
+            data.addRows([
+                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].AverageDistanceDisplay],
+               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].AverageDistanceDisplay]
+
+            ]);
+
+            // Set options for Anthony's pie chart.
+            var options = {
+                title: '@Html.DisplayNameFor(model=> model.DistinctVendors[0].AverageDistance)',
+                width: 400,
+                height: 300
+            };
+
+            // Instantiate and draw the chart for Anthony's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Total_Something_Div'));
+            chart.draw(data, options);
+        }
+
+        function drawAverageDistanceChart() {
+
+            // Create the data table for Anthony's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor ID');
+            data.addColumn('number', 'Amount Earned');
+            data.addRows([
+                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalFaresDisplay],
+               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalFaresDisplay]
+
+            ]);
+
+            // Set options for Anthony's pie chart.
+            var options = {
+                title: '@Html.DisplayNameFor(model=> model.DistinctVendors[0].TotalFares)',
+                width: 400,
+                height: 300
+            };
+
+            // Instantiate and draw the chart for Anthony's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Average_Distance_Div'));
+            chart.draw(data, options);
+        }
     </script>
 </head>
 <body>
@@ -249,6 +329,10 @@
             <td><div id="Total_Trips_Div" style="border: 1px solid #ccc"></div></td>
             <td><div id="Total_Passenger_Div" style="border: 1px solid #ccc"></div></td>
             <td><div id="Total_Tips_Div" style="border: 1px solid #ccc"></div></td>
+            
+        </tr>
+        <tr>
+            <td><div id="Average_Distance_Div" style="border: 1px solid #ccc"></div></td>
         </tr>
     </table>
 </body>

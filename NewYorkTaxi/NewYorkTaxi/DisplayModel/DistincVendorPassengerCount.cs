@@ -12,7 +12,7 @@ namespace NewYorkTaxi.DisplayModel
         public List<double> Tips;
         public List<double> TotalPrices;
         public List<double> Distances;
-
+        [Display(Name ="Total Tips Earned:")]
         public int TotalTipsDisplay 
         { get 
             { var input = Math.Round(TotalTips, 0);
@@ -27,6 +27,18 @@ namespace NewYorkTaxi.DisplayModel
             get
             {
                 var input = Math.Round(TotalFares, 0);
+
+                int ret = Convert.ToInt32(input);
+                return ret;
+            }
+        }
+
+        
+        public int AverageDistanceDisplay
+        {
+            get
+            {
+                var input = Math.Round(AverageDistance, 0);
 
                 int ret = Convert.ToInt32(input);
                 return ret;
@@ -106,6 +118,24 @@ namespace NewYorkTaxi.DisplayModel
                 { ret = 0; }
                 else { ret = passengerCounts.Sum(); }
                 return ret;
+            }
+        }
+
+        [Display(Name ="Average Distance Travelled/Trip:")]
+        public double AverageDistance
+        {
+            get
+            {
+                double ret;
+                if (Distances == null)
+                { ret = 0; }
+                else
+                {
+                    ret = Distances.Average();
+                    ret = Math.Round(ret, 2);
+                }
+                return ret;
+
             }
         }
         
