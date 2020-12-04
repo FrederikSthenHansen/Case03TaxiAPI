@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
 
 
         //string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
-        readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count";
+        readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count,tip_amount,total_amount,Trip_Distance";
         readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
         readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=distinct%20vendorid";
 
@@ -77,9 +77,35 @@ namespace WebApplication1.Controllers
             
         }
 
-
        
+        public async Task<IActionResult> Tips()
+        {
+            if (await writeJsonResponse(SoQLPassengersAndTips)== true)
+            {
+                //open Jsonfile and deserialize content
+                if (System.IO.File.Exists(myJsonFilePath))
+                {
+                    using (StreamReader reader = new StreamReader(myJsonFilePath))
+                    {
+                        string json = reader.ReadToEnd();
 
+                        reader.Close();
+
+                        //Remember to Always mirror the Database property names in your c# object properies!!!
+                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                    }
+                }
+
+                //Deliver items to DisplayModel
+                Display.AvgPassengers = items;
+
+                //Seperate the vendors in the displaymodel
+                Display.SortDistinctVendors();
+            }
+
+                return View(Display);
+        }
+     
         public async Task<IActionResult> Privacy()
         {  
            // send Query about how many Vendors there are and write response to Jsonfile

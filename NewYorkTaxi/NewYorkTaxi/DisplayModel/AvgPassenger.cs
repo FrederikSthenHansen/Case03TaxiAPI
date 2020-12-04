@@ -11,11 +11,11 @@ namespace NewYorkTaxi
 
         public int Passenger_Count { get; set; }
 
-        public decimal Total_Amount { get; set; }
+        public double Total_Amount { get; set; }
 
-        public decimal Trip_Distance { get; set; }
+        public double Trip_Distance { get; set; }
 
-        public decimal Tip_Amount { get; set; }
+        public double Tip_Amount { get; set; }
 
         public AvgPassenger()
         {

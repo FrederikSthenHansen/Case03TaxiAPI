@@ -10,10 +10,7 @@
 }
 
 <h1>Passanger Data for Taxi Companies</h1>
-<h1></h1>
-<p>
-    @*<a asp-action="Create">Create New</a>*@
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -98,180 +95,162 @@
     </tbody>
 </table>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Label.VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].TotalTips)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.DistinctVendors)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalTips)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Label.VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistinctVendors[0].TotalFares)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.DistinctVendors)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalFares)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 <html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
 
-    <head>
-        <!--Load the AJAX API-->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-
-        // Load the Visualization API and the corechart package.
+        // Load Charts and the corechart package.
         google.charts.load('current', { 'packages': ['corechart'] });
 
+        // Draw the pie chart for Sarah's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawTotalTripsChart);
 
-        // Set a callback to run when the Google Visualization API is loaded.
-        //google.charts.setOnLoadCallback(drawTotalTripsChart);
-        //google.charts.setOnLoadCallback(drawAverageChart);
-        google.charts.setOnLoadCallback(drawTotalpassengersChart);
+        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawTotalPassengersChart);
+
+        //Draw the Pie Chart for Total Tips earned, when charts is loaded.
+        google.charts.setOnLoadCallback(drawTotalTipsChart)
 
 
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
+          // Callback that draws the pie chart for Total tips earned.
+        function drawTotalTipsChart() {
 
-            function drawTotalPassengersChart()
-            {
-
-            // Create the data table.
+            // Create the data table for Sarah's pizza.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Vendor id');
-            data.addColumn('number', 'Passengers Carried');
-
-
-            data.addRows(
-            [
-                 @*@foreach (var item in Model.DistinctVendors)
-                 {
-
-                //iterator slutter på count-1, så -2 er den sidste plads i collectionen der skal have komma
-                if (Model.iterator <= Model.DistinctVendors.Count-2)
-                {
-                         //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
-                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.PassengerTotal}],";
-                }
-                else
-                {
-
-                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.PassengerTotal}]";
-                }
-                         <text> @Model.displaydata </text> //virker ikke
-                    Model.Iterate();
-                  }*@
-
-                    ['vendor number 1', @Model.DistinctVendors[0].PassengerTotal],
-                    ['vendor number 2', @Model.DistinctVendors[1].PassengerTotal]
-                    @*['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].PassengerTotal]*@
-
+            data.addColumn('string', 'Vendor ID');
+            data.addColumn('number', ' Total Tip Amount');
+            data.addRows([
+                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTipsDisplay],
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTipsDisplay]
             ]);
-              @Model.NumberReset();
 
-
-                         // Set chart options
-                         var options = {
-                'title': 'Total Passengers Carried',
-                'width': 500,
-                'height': 400
+            // Set options for Sarah's pie chart.
+            var options = {
+                title: 'Total Tips earned',
+                width: 400,
+                height: 300
             };
 
-                     // Instantiate and draw our chart, passing in some options.
-                     var chart = new google.visualization.PieChart(document.getElementById('chart_div_passenger_total'));
-                     chart.draw(data, options);
+            // Instantiate and draw the chart for Sarah's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Total_Tips_Div'));
+            chart.draw(data, options);
         }
 
-            @*function drawTotalTripsChart() {
+        // Callback that draws the pie chart for Sarah's pizza.
+        function drawTotalTripsChart() {
 
-            // Create the data table.
+            // Create the data table for Sarah's pizza.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Vendor id');
-            data.addColumn('number', 'Total trips');
-
-
-            data.addRows(
-                [
-
-                    @foreach(var item in Model.DistinctVendors)
-             {
-
-                 //iterator slutter på count-1, så -2 er den sidste plads i collectionen der skal have komma
-                 if (Model.iterator <= Model.DistinctVendors.Count - 2) {
-                     //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
-                     Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.TotalTrips}],";
-                 }
-                 else {
-
-                     Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.TotalTrips}]";
-                 }
-                 <text> @Model.displaydata </text> //virker ikke
-                 Model.Iterate();
-             }
-                    ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTrips],
-                    ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips]
-                    ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTrips]
-
+            data.addColumn('string', 'Vendor ID');
+            data.addColumn('number', 'Trips');
+            data.addRows([
+                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTrips],
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips]
             ]);
-              @Model.NumberReset();
 
-
-                         // Set chart options
-                         var options = {
-                'title': 'Total Trips driven',
-                'width': 500,
-                'height': 400
+            // Set options for Sarah's pie chart.
+            var options = {
+                title: 'Total Trips Driven',
+                width: 400,
+                height: 300
             };
 
-                     // Instantiate and draw our chart, passing in some options.
-                     var chart = new google.visualization.PieChart(document.getElementById('chart_div_total_trips'));
-                     chart.draw(data, options);
-        }*@
+            // Instantiate and draw the chart for Sarah's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Total_Trips_Div'));
+            chart.draw(data, options);
+        }
 
-            @*function drawAverageChart()
-            {
+        // Callback that draws the pie chart for Anthony's pizza.
+        function drawTotalPassengersChart() {
 
-                // Create the data table.
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Vendor id');
-                data.addColumn('number', 'Passengers Carried');
+            // Create the data table for Anthony's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Vendor ID');
+            data.addColumn('number', 'Passengers');
+            data.addRows([
+                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].PassengerTotal],
+               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].PassengerTotal]
 
+            ]);
 
-                data.addRows(
-                    [
-                 @foreach (var item in Model.DistinctVendors)
-                 {
-                     Model.Iterate();
-                //iterator slutter på count-1, så -2 er den sidste plads i collectionen
-                if (Model.iterator < Model.DistinctVendors.Length-2)
-                {
-                         //find en måde at skrive den gennemsnitlige passagerantal her + find en måde at tage Vendor Id fra displaymodel.
-                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.Average()}],";
-                }
-                else
-                {
-                         Model.Iterate();
-                    Model.displaydata = $"['Vendor number {Model.VendorIdLabel}', {item.Average()}]";
-                }
-                         <text> @Model.displaydata </text>
-                    Model.Iterate();
-                  }
+            // Set options for Anthony's pie chart.
+            var options = {
+                title: 'Total Passengers Transported',
+                width: 400,
+                height: 300
+            };
 
-                        ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].averageValue],
-                        ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].averageValue]
-                    ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].averageValue]
-
-                    ]);
-              @Model.NumberReset();
-
-
-                // Set chart options
-                var options = {
-                    'title': 'Higest average passangercount',
-                    'width': 500,
-                    'height': 400
-                };
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.PieChart(document.getElementById('chart_div_average'));
-                chart.draw(data, options);
-            }*@
-
-        </script>
-    </head>
-    <body>
-        <table class="figures">
-            <tr>
-                @*<td><div id="chart_div_total_trips"></div></td>
-                <td><div id="chart_div_average"></div></td>*@
-                <td><div id="chart_div_passenger_total"></div></td>
-            </tr>
-        </table>
-    </body>
+            // Instantiate and draw the chart for Anthony's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Total_Passenger_Div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+        <tr>
+            <td><div id="Total_Trips_Div" style="border: 1px solid #ccc"></div></td>
+            <td><div id="Total_Passenger_Div" style="border: 1px solid #ccc"></div></td>
+            <td><div id="Total_Tips_Div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+    </table>
+</body>
 </html>
+

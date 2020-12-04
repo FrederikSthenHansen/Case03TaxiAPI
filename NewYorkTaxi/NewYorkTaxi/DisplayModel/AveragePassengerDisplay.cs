@@ -41,6 +41,8 @@ namespace NewYorkTaxi.DisplayModel
                     if (AvgPassengers[a].VendorID == VendorIdLabel[v])
                     {
                         Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
+                        Dvp.Tips.Add(AvgPassengers[a].Tip_Amount);
+                        Dvp.TotalPrices.Add(AvgPassengers[a].Total_Amount);
                         AvgPassengers.RemoveAt(a);
                     }
                 }
