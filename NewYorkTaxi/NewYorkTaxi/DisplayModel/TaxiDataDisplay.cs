@@ -7,16 +7,20 @@ namespace NewYorkTaxi.DisplayModel
 {
     public class TaxiDataDisplay
     {/// <summary>
-    /// List of "raw" data objects deserialized from the Jsonfile.
+    /// List of raw data objects deserialized from the Jsonfile.
         public List<RawData> MyDatalist;
         /// <summary>
         /// List to contain the data Desirialized from Json
         /// </summary>
         public List<DisplayValueData> DistinctVendors;
+
         public RawData Label;
+
         public List<int> VendorIdLabel = new List<int>();
+
         public string displaydata;
-       public int iterator;
+
+       //public int iterator;
        public int vendorCount { get { return VendorIdLabel.Count; }}
 
 
@@ -59,17 +63,17 @@ namespace NewYorkTaxi.DisplayModel
         
 
 
-        public int NumberReset( )
-        {
-           return iterator = 0;
+        //public int NumberReset( )
+        //{
+        //   return iterator = 0;
             
-        }
-        public int Iterate()
-        {
+        //}
+        //public int Iterate()
+        //{
          
-            iterator++;
-            return iterator;
-        }
+        //    iterator++;
+        //    return iterator;
+        //}
 
         public TaxiDataDisplay()
         {
