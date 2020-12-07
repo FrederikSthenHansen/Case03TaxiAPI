@@ -3,9 +3,9 @@ using System;
 namespace NewYorkTaxi
 {
     /// <summary>
-    /// Class to store Any kind of Taxi data. Name is misleading 
+    /// Class to store Any kind of Taxi data.
     /// </summary>
-    public class AvgPassenger
+    public class RawData
     {
         public int VendorID { get; set; }
 
@@ -17,7 +17,7 @@ namespace NewYorkTaxi
 
         public double Tip_Amount { get; set; }
 
-        public AvgPassenger()
+        public RawData()
         {
 
         }

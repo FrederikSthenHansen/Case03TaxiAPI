@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 
 namespace NewYorkTaxi.DisplayModel
 {
-    public class AveragePassengerDisplay
-    {
-        public List<AvgPassenger> AvgPassengers;
-        //public List<int>[] DistinctVendors;
-        public List<DistincVendorPassengerCount> DistinctVendors;
-        public AvgPassenger Label;
+    public class TaxiDataDisplay
+    {/// <summary>
+    /// List of "raw" data objects deserialized from the Jsonfile.
+        public List<RawData> MyDatalist;
+        /// <summary>
+        /// List to contain the data Desirialized from Json
+        /// </summary>
+        public List<DisplayValueData> DistinctVendors;
+        public RawData Label;
         public List<int> VendorIdLabel = new List<int>();
         public string displaydata;
        public int iterator;
@@ -29,22 +32,22 @@ namespace NewYorkTaxi.DisplayModel
             //Mock vendor iD count Code ends
             
             
-            DistinctVendors = new List<DistincVendorPassengerCount>();
+            DistinctVendors = new List<DisplayValueData>();
 
             for (int v = 0; v< vendorCount; v++)
             {
-              DistincVendorPassengerCount Dvp=  new DistincVendorPassengerCount(VendorIdLabel[v]);
+              DisplayValueData Dvp=  new DisplayValueData(VendorIdLabel[v]);
                 DistinctVendors.Add(Dvp);
 
-                for (int a = 0; a < AvgPassengers.Count; a++)
+                for (int a = 0; a < MyDatalist.Count; a++)
                 {
-                        if (AvgPassengers[a].VendorID == VendorIdLabel[v])
+                        if (MyDatalist[a].VendorID == VendorIdLabel[v])
                         {
-                            Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
-                            Dvp.Tips.Add(AvgPassengers[a].Tip_Amount);
-                            Dvp.TotalPrices.Add(AvgPassengers[a].Total_Amount);
-                            Dvp.Distances.Add(AvgPassengers[a].Trip_Distance);
-                            AvgPassengers.RemoveAt(a);
+                            Dvp.passengerCounts.Add(MyDatalist[a].Passenger_Count);
+                            Dvp.Tips.Add(MyDatalist[a].Tip_Amount);
+                            Dvp.TotalPrices.Add(MyDatalist[a].Total_Amount);
+                            Dvp.Distances.Add(MyDatalist[a].Trip_Distance);
+                            MyDatalist.RemoveAt(a);
                         }
                 }
             }
@@ -68,9 +71,9 @@ namespace NewYorkTaxi.DisplayModel
             return iterator;
         }
 
-        public AveragePassengerDisplay()
+        public TaxiDataDisplay()
         {
-            Label = new AvgPassenger();
+            Label = new RawData();
         }
 
         

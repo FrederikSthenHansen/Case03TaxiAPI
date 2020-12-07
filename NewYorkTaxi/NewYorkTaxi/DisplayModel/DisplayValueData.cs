@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace NewYorkTaxi.DisplayModel
 {
-    public class DistincVendorPassengerCount
+    /// <summary>
+    /// Class to contain sanitized Taxi data for Displaying to the user.
+    /// </summary>
+    public class DisplayValueData
     {public string VendorName;
        public List<int> passengerCounts;
         public List<double> Tips;
         public List<double> TotalPrices;
         public List<double> Distances;
-
+        /// <summary>
+        /// Properties ending on display are meant for the Google Charts graphs, that don't seem to accept any C# numbers that are not Integers
+        /// </summary>
         [Display(Name ="Total Tips Earned:")]
         public int TotalTipsDisplay 
         { get 
@@ -23,6 +28,9 @@ namespace NewYorkTaxi.DisplayModel
             } 
         }
 
+        /// <summary>
+        /// Properties ending on display are meant for the Google Charts graphs, that don't seem to accept any C# numbers that are not Integers
+        /// </summary>
         public int TotalFaresDisplay
         {
             get
@@ -34,7 +42,9 @@ namespace NewYorkTaxi.DisplayModel
             }
         }
 
-        
+        /// <summary>
+        /// Properties ending on display are meant for the Google Charts graphs, that don't seem to accept any C# numbers that are not Integers
+        /// </summary>
         public int AverageDistanceDisplay
         {
             get
@@ -77,7 +87,7 @@ namespace NewYorkTaxi.DisplayModel
             }
         }
 
-        [Display(Name ="Total trips Driven:")]
+        [Display(Name ="Total Trips Driven:")]
         public int TotalTrips {
             get
             {
@@ -141,7 +151,7 @@ namespace NewYorkTaxi.DisplayModel
         }
         
 
-        public DistincVendorPassengerCount(int vendorIdNumber)
+        public DisplayValueData(int vendorIdNumber)
         {
             VendorName = $"Vendor Number {vendorIdNumber}:";
             passengerCounts = new List<int>();

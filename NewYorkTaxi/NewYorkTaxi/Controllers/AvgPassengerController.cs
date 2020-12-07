@@ -15,12 +15,12 @@ namespace NewYorkTaxi.Controllers
         //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
         //private readonly MvcDbContext _context;
-        private AveragePassengerDisplay Display;
-        public static List<AvgPassenger> items;
+        private TaxiDataDisplay Display;
+        public static List<RawData> items;
 
         public AvgPassengerController(/*MvcDbContext context*/)
         {
-            Display = new AveragePassengerDisplay();
+            Display = new TaxiDataDisplay();
         }
 
 
@@ -56,13 +56,13 @@ namespace NewYorkTaxi.Controllers
                 string json = reader.ReadToEnd();
 
                 //denne Deserializering skal sikkert finjusteres.
-                items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                items = JsonConvert.DeserializeObject<List<RawData>>(json);
 
             }
 
             items.GroupBy(x => x.VendorID);
 
-            Display.AvgPassengers = items;
+            Display.MyDatalist = items;
             //Mangler at finde en måde at få mit view frem som resultat af Requested
             return View (Display);
         }

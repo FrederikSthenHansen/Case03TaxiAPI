@@ -18,8 +18,8 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private AveragePassengerDisplay Display;
-        public static List<NewYorkTaxi.AvgPassenger> items;
+        private TaxiDataDisplay Display;
+        public static List<NewYorkTaxi.RawData> items;
         
 
         //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
         public HomeController(ILogger<HomeController> logger)
         {   
             _logger = logger;
-            Display = new AveragePassengerDisplay();
+            Display = new TaxiDataDisplay();
         }
 
         public IActionResult Index()
@@ -91,18 +91,18 @@ namespace WebApplication1.Controllers
                         reader.Close();
 
                         //Remember to Always mirror the Database property names in your c# object properies!!!
-                        items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                        items = JsonConvert.DeserializeObject<List<RawData>>(json);
                     }
                 }
 
                 //Deliver items to DisplayModel
-                Display.AvgPassengers = items;
+                Display.MyDatalist = items;
 
                 //Seperate the vendors in the displaymodel
                 Display.SortDistinctVendors();
             }
 
-                return View(Display);
+                return View(/*Display*/);
         }
      
         public async Task<IActionResult> Privacy()
@@ -137,12 +137,12 @@ namespace WebApplication1.Controllers
                             reader.Close();
 
                             //Remember to Always mirror the Database property names in your c# object properies!!!
-                            items = JsonConvert.DeserializeObject<List<AvgPassenger>>(json);
+                            items = JsonConvert.DeserializeObject<List<RawData>>(json);
                         }
                     }
 
                     //Deliver items to DisplayModel
-                    Display.AvgPassengers = items;
+                    Display.MyDatalist = items;
 
                 //Seperate the vendors in the displaymodel
                 Display.SortDistinctVendors();
