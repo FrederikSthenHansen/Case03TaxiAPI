@@ -9,7 +9,7 @@
     ViewData["Title"] = "View";
 }
 
-<h1>Passanger Data for Taxi Companies</h1>
+<h1>Data about Taxi Companies in New York</h1>
 
 <table class="table">
     <thead>
@@ -194,15 +194,13 @@
 
         google.charts.setOnLoadCallback(drawTotalTipsChart);
 
-        google.charts.setOnLoadCallback(drawAverageDistanceChart);
-
-        google.Charts.setOnLoadCallback(drawSomethingChart);
+        google.charts.setOnLoadCallback(drawTotalFaresChart);
 
 
           // Callback that draws the pie chart for Total tips earned.
         function drawTotalTipsChart() {
 
-            // Create the data table for Sarah's pizza.
+            // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', ' Total Tip Amount');
@@ -212,22 +210,22 @@
                 ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTipsDisplay]
             ]);
 
-            // Set options for Sarah's pie chart.
+            // Set options for this chart.
             var options = {
                 title: '@Html.DisplayNameFor(model => model.DistinctVendors[0].TotalTips)',
                 width: 400,
                 height: 300
             };
 
-            // Instantiate and draw the chart for Sarah's pizza.
+            // Instantiate and draw the chart.
             var chart = new google.visualization.PieChart(document.getElementById('Total_Tips_Div'));
             chart.draw(data, options);
         }
 
-        // Callback that draws the pie chart for Sarah's pizza.
+        // Callback that draws the pie chart for the amount of trips Driven.
         function drawTotalTripsChart() {
 
-            // Create the data table for Sarah's pizza.
+            // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Trips');
@@ -237,22 +235,22 @@
                 ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTrips]
             ]);
 
-            // Set options for Sarah's pie chart.
+            // Set options for this chart.
             var options = {
                 title: 'Total Trips Driven',
                 width: 400,
                 height: 300
             };
 
-            // Instantiate and draw the chart for Sarah's pizza.
+            // Instantiate and draw the chart.
             var chart = new google.visualization.PieChart(document.getElementById('Total_Trips_Div'));
             chart.draw(data, options);
         }
 
-        // Callback that draws the pie chart for Anthony's pizza.
+        // Callback that draws the pie chart for the total amount of passengers transported.
         function drawTotalPassengersChart() {
 
-            // Create the data table for Anthony's pizza.
+            // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Passengers');
@@ -262,47 +260,21 @@
                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].PassengerTotal]
             ]);
 
-            // Set options for Anthony's pie chart.
+            // Set options for.
             var options = {
                 title: 'Total Passengers Transported',
                 width: 400,
                 height: 300
             };
 
-            // Instantiate and draw the chart for Anthony's pizza.
+            // Instantiate and draw the chart.
             var chart = new google.visualization.PieChart(document.getElementById('Total_Passenger_Div'));
             chart.draw(data, options);
         }
 
-        // Callback that draws the pie chart for Anthony's pizza.
-        function drawSomethingChart() {
+        function drawTotalFaresChart() {
 
-            // Create the data table for Anthony's pizza.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Vendor ID');
-            data.addColumn('number', 'Passengers');
-            data.addRows([
-                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].AverageDistanceDisplay],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].AverageDistanceDisplay],
-                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].AverageDistanceDisplay]
-
-            ]);
-
-            // Set options for Anthony's pie chart.
-            var options = {
-                title: '@Html.DisplayNameFor(model=> model.DistinctVendors[0].AverageDistance)',
-                width: 400,
-                height: 300
-            };
-
-            // Instantiate and draw the chart for Anthony's pizza.
-            var chart = new google.visualization.PieChart(document.getElementById('Total_Something_Div'));
-            chart.draw(data, options);
-        }
-
-        function drawAverageDistanceChart() {
-
-            // Create the data table for Anthony's pizza.
+            // Create the data table 
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Amount Earned');
@@ -313,15 +285,15 @@
 
             ]);
 
-            // Set options for Anthony's pie chart.
+            // Set options for pie chart.
             var options = {
                 title: '@Html.DisplayNameFor(model=> model.DistinctVendors[0].TotalFares)',
                 width: 400,
                 height: 300
             };
 
-            // Instantiate and draw the chart for Anthony's pizza.
-            var chart = new google.visualization.PieChart(document.getElementById('Average_Distance_Div'));
+            // Instantiate and draw the chart for this method
+            var chart = new google.visualization.PieChart(document.getElementById('Total_Fares_Div'));
             chart.draw(data, options);
         }
     </script>
@@ -333,10 +305,9 @@
             <td><div id="Total_Trips_Div" style="border: 1px solid #ccc"></div></td>
             <td><div id="Total_Passenger_Div" style="border: 1px solid #ccc"></div></td>
             <td><div id="Total_Tips_Div" style="border: 1px solid #ccc"></div></td>
-            
         </tr>
         <tr>
-            <td><div id="Average_Distance_Div" style="border: 1px solid #ccc"></div></td>
+            <td><div id="Total_Fares_Div" style="border: 1px solid #ccc"></div></td>
         </tr>
     </table>
 </body>

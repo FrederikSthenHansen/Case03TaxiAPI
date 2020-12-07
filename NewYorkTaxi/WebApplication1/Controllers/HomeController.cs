@@ -55,7 +55,6 @@ namespace WebApplication1.Controllers
             using (HttpClient client = new HttpClient())
             {
                 //Setting up the response...         
-                //myUrl = System.Web.HttpUtility.UrlEncode(myUrl);
                 using (HttpResponseMessage res = await client.GetAsync(myUrl))
                 using (HttpContent content = res.Content)
                 {
@@ -125,7 +124,7 @@ namespace WebApplication1.Controllers
             //    }
             //}
 
-            //send Query about vendors and passengercounts and write response to Jsonfile
+            //send Query about vendors and revelant data and write response to Jsonfile
             if (await writeJsonResponse(SoQLVendorsAndPasengerCount) == true)
                 {
                     //open Jsonfile and deserialize content

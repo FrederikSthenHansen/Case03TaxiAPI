@@ -38,8 +38,6 @@ namespace NewYorkTaxi.DisplayModel
 
                 for (int a = 0; a < AvgPassengers.Count; a++)
                 {
-                    //try
-                    //{
                         if (AvgPassengers[a].VendorID == VendorIdLabel[v])
                         {
                             Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
@@ -48,8 +46,6 @@ namespace NewYorkTaxi.DisplayModel
                             Dvp.Distances.Add(AvgPassengers[a].Trip_Distance);
                             AvgPassengers.RemoveAt(a);
                         }
-                    //}
-                    //catch()
                 }
             }
             
