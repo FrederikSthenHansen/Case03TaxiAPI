@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations; //Vigtig reference til Displaynames!!
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +12,7 @@ namespace NewYorkTaxi.DisplayModel
         public List<double> Tips;
         public List<double> TotalPrices;
         public List<double> Distances;
+
         [Display(Name ="Total Tips Earned:")]
         public int TotalTipsDisplay 
         { get 
@@ -94,7 +95,7 @@ namespace NewYorkTaxi.DisplayModel
             get 
             {
                 double ret;
-                if (passengerCounts == null)
+                if (passengerCounts == null|| passengerCounts.Count==0)
                 { ret = 0; }
                 else {
                     ret = passengerCounts.Average();
@@ -127,7 +128,7 @@ namespace NewYorkTaxi.DisplayModel
             get
             {
                 double ret;
-                if (Distances == null)
+                if (Distances == null || Distances.Count == 0)
                 { ret = 0; }
                 else
                 {

@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
 
 
-        //string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
+        readonly string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
         readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count,tip_amount,total_amount,Trip_Distance";
         readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
         readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=distinct%20vendorid";

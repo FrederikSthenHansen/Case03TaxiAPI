@@ -208,7 +208,8 @@
             data.addColumn('number', ' Total Tip Amount');
             data.addRows([
                 ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTipsDisplay],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTipsDisplay]
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTipsDisplay],
+                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTipsDisplay]
             ]);
 
             // Set options for Sarah's pie chart.
@@ -232,7 +233,8 @@
             data.addColumn('number', 'Trips');
             data.addRows([
                 ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTrips],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips]
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips],
+                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTrips]
             ]);
 
             // Set options for Sarah's pie chart.
@@ -256,8 +258,8 @@
             data.addColumn('number', 'Passengers');
             data.addRows([
                 ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].PassengerTotal],
-               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].PassengerTotal]
-
+               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].PassengerTotal],
+               ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].PassengerTotal]
             ]);
 
             // Set options for Anthony's pie chart.
@@ -281,7 +283,8 @@
             data.addColumn('number', 'Passengers');
             data.addRows([
                 ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].AverageDistanceDisplay],
-               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].AverageDistanceDisplay]
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].AverageDistanceDisplay],
+                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].AverageDistanceDisplay]
 
             ]);
 
@@ -305,7 +308,8 @@
             data.addColumn('number', 'Amount Earned');
             data.addRows([
                 ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalFaresDisplay],
-               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalFaresDisplay]
+                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalFaresDisplay],
+               ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalFaresDisplay]
 
             ]);
 

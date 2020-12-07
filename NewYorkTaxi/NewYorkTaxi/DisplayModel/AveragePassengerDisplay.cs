@@ -25,7 +25,7 @@ namespace NewYorkTaxi.DisplayModel
             //Mock Vendor ID count code start
             VendorIdLabel.Add(1);
             VendorIdLabel.Add(2);
-            //VendorIdLabel.Add(4);
+            VendorIdLabel.Add(4);
             //Mock vendor iD count Code ends
             
             
@@ -38,14 +38,18 @@ namespace NewYorkTaxi.DisplayModel
 
                 for (int a = 0; a < AvgPassengers.Count; a++)
                 {
-                    if (AvgPassengers[a].VendorID == VendorIdLabel[v])
-                    {
-                        Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
-                        Dvp.Tips.Add(AvgPassengers[a].Tip_Amount);
-                        Dvp.TotalPrices.Add(AvgPassengers[a].Total_Amount);
-                        Dvp.Distances.Add(AvgPassengers[a].Trip_Distance);
-                        AvgPassengers.RemoveAt(a);
-                    }
+                    //try
+                    //{
+                        if (AvgPassengers[a].VendorID == VendorIdLabel[v])
+                        {
+                            Dvp.passengerCounts.Add(AvgPassengers[a].Passenger_Count);
+                            Dvp.Tips.Add(AvgPassengers[a].Tip_Amount);
+                            Dvp.TotalPrices.Add(AvgPassengers[a].Total_Amount);
+                            Dvp.Distances.Add(AvgPassengers[a].Trip_Distance);
+                            AvgPassengers.RemoveAt(a);
+                        }
+                    //}
+                    //catch()
                 }
             }
             
