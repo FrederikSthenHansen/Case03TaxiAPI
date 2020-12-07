@@ -146,7 +146,6 @@ namespace NewYorkTaxi.DisplayModel
                     ret = Math.Round(ret, 2);
                 }
                 return ret;
-
             }
         }
         

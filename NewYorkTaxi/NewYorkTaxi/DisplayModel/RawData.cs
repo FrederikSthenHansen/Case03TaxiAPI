@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NewYorkTaxi
 {
@@ -7,6 +8,7 @@ namespace NewYorkTaxi
     /// </summary>
     public class RawData
     {
+        [Display(Name = "Vendor ID Number")]
         public int VendorID { get; set; }
 
         public int Passenger_Count { get; set; }
