@@ -196,7 +196,6 @@
 
         google.charts.setOnLoadCallback(drawTotalFaresChart);
 
-
           // Callback that draws the pie chart for Total tips earned.
         function drawTotalTipsChart() {
 
@@ -205,9 +204,7 @@
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', ' Total Tip Amount');
             data.addRows([
-                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTipsDisplay],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTipsDisplay],
-                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTipsDisplay]
+                @foreach (var data in Model.DistinctVendors) {<text>['@data.VendorName', @data.TotalTipsDisplay],</text>}
             ]);
 
             // Set options for this chart.
@@ -230,9 +227,7 @@
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Trips');
             data.addRows([
-                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalTrips],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalTrips],
-                ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalTrips]
+                    @foreach (var data in Model.DistinctVendors) {<text>['@data.VendorName', @data.TotalTrips],</text>}
             ]);
 
             // Set options for this chart.
@@ -255,9 +250,7 @@
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Passengers');
             data.addRows([
-                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].PassengerTotal],
-               ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].PassengerTotal],
-               ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].PassengerTotal]
+               @foreach (var data in Model.DistinctVendors) {<text>['@data.VendorName', @data.PassengerTotal],</text>}
             ]);
 
             // Set options for.
@@ -275,14 +268,12 @@
         // Callback that draws the pie chart for the total amount Fares earned.
         function drawTotalFaresChart() {
 
-            // Create the data table 
+            // Create the data table
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Vendor ID');
             data.addColumn('number', 'Amount Earned');
             data.addRows([
-                ['@Model.DistinctVendors[0].VendorName', @Model.DistinctVendors[0].TotalFaresDisplay],
-                ['@Model.DistinctVendors[1].VendorName', @Model.DistinctVendors[1].TotalFaresDisplay],
-               ['@Model.DistinctVendors[2].VendorName', @Model.DistinctVendors[2].TotalFaresDisplay]
+               @foreach (var data in Model.DistinctVendors) {<text>['@data.VendorName', @data.TotalFaresDisplay],</text>}
 
             ]);
 

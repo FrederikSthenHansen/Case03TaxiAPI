@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewYorkTaxi", "NewYorkTaxi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiDataViewer", "WebApplication1\TaxiDataViewer.csproj", "{12D8EF70-FDE3-4A8B-87E2-37B9D77FD88A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject1", "NUnitTestProject1\NUnitTestProject1.csproj", "{476C86B4-F35E-4223-A273-2641B74A5E54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{12D8EF70-FDE3-4A8B-87E2-37B9D77FD88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D8EF70-FDE3-4A8B-87E2-37B9D77FD88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D8EF70-FDE3-4A8B-87E2-37B9D77FD88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C86B4-F35E-4223-A273-2641B74A5E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C86B4-F35E-4223-A273-2641B74A5E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C86B4-F35E-4223-A273-2641B74A5E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C86B4-F35E-4223-A273-2641B74A5E54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -43,6 +43,7 @@ namespace NewYorkTaxi.DisplayModel
               DisplayValueData Dvp=  new DisplayValueData(VendorIdLabel[v]);
                 DistinctVendors.Add(Dvp);
 
+                //int dataIterations = MyDatalist.Count;
                 for (int a = 0; a < MyDatalist.Count; a++)
                 {
                         if (MyDatalist[a].VendorID == VendorIdLabel[v])
@@ -52,6 +53,9 @@ namespace NewYorkTaxi.DisplayModel
                             Dvp.TotalPrices.Add(MyDatalist[a].Total_Amount);
                             Dvp.Distances.Add(MyDatalist[a].Trip_Distance);
                             MyDatalist.RemoveAt(a);
+
+                            //Reset For loop with the reduced collection size
+                            a = -1;
                         }
                 }
             }

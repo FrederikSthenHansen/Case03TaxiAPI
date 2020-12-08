@@ -30,6 +30,7 @@ namespace WebApplication1.Controllers
         readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count,tip_amount,total_amount,Trip_Distance";
         readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
         readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=distinct%20vendorid";
+        readonly string Direct = "https://data.cityofnewyork.us/Transportation/2018-Yellow-Taxi-Trip-Data/t29m-gskq/data";
 
         public HomeController(ILogger<HomeController> logger)
         {   
@@ -125,7 +126,7 @@ namespace WebApplication1.Controllers
             //}
 
             //send Query about vendors and revelant data and write response to Jsonfile
-            if (await writeJsonResponse(SoQLVendorsAndPasengerCount) == true)
+            if (await writeJsonResponse(SoQLVendorsAndPasengerCount/*Direct*/) == true)
                 {
                     //open Jsonfile and deserialize content
                     if (System.IO.File.Exists(myJsonFilePath))
