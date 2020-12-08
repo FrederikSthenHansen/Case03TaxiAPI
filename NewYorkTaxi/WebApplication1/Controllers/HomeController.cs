@@ -19,18 +19,21 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private TaxiDataDisplay Display;
-        public static List<NewYorkTaxi.RawData> items;
+        private static List<NewYorkTaxi.RawData> items;
         
 
-        //Husk at lave en et par ekstra kodelinjer til at have en ny hardcoded filepath til Json filen, hvis jeg koder hjemmefra
+        
+        /// <summary>
+        /// This string needs to a valid path, for your computer to write a json file to.
+        /// </summary>
         readonly string myJsonFilePath = @"C:\Users\SA02- Frederik\Documents\Case03TaxiAPI\Case03TaxiAPI\NewYorkTaxi\NewYorkTaxi\Files\QueryResult.Json";
 
 
         readonly string SoQL100 = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count&$limit=100";
-        readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count,tip_amount,total_amount,Trip_Distance";
+        readonly string SoQLVendorsAndPasengerCount = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=vendorid,passenger_count,tip_amount,total_amount,Trip_Distance&$limit=50000";
         readonly string SoQLPassengersAndTips = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=passenger_count,tip_amount";
         readonly string SoQLDistinctVendors = "https://data.cityofnewyork.us/resource/t29m-gskq.json?$select=distinct%20vendorid";
-        readonly string Direct = "https://data.cityofnewyork.us/Transportation/2018-Yellow-Taxi-Trip-Data/t29m-gskq/data";
+        //readonly string Direct = "https://data.cityofnewyork.us/Transportation/2018-Yellow-Taxi-Trip-Data/t29m-gskq/data";
 
         public HomeController(ILogger<HomeController> logger)
         {   
@@ -107,21 +110,24 @@ namespace WebApplication1.Controllers
         }
      
         public async Task<IActionResult> Privacy()
-        {  
-           // send Query about how many Vendors there are and write response to Jsonfile
+        {
+            //send Query about how many Vendors there are and write response to Jsonfile
             //if (await writeJsonResponse(SoQLDistinctVendors) == true)
             //{
             //    if (System.IO.File.Exists(myJsonFilePath))
             //    {
+            //        List<int> retValue = new List<int>();
             //        using (StreamReader reader = new StreamReader(myJsonFilePath))
             //        {
             //            string json = reader.ReadToEnd();
 
             //            reader.Close();
 
+                        
             //            //Remember to Always mirror the Database property names in your c# object properies!!!
-            //            Display.VendorIdLabel = JsonConvert.DeserializeObject<List<int>>(json);
+            //            retValue = JsonConvert.DeserializeObject<List<int>>(json);
             //        }
+            //        Display.VendorIdLabel = retValue;
             //    }
             //}
 
